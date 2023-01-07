@@ -38,25 +38,37 @@ exports.obterTodosAgentes = async (req, res) => {
     try {
         const agentes = await Agente.find();
 
-        res.status(200).json({
-            status: 'Sucess',
-            results: agentes.length,
-            data: {
-                agentes,
-            },
-        });
+        if (!_.isEmpty(agentes)) {
+            return res.status(200).json({
+                status: 'Sucess',
+                results: agentes.length,
+                data: {
+                    agentes,
+                },
+            });
+        }
+
+        return err;
     } catch (err) {
         res.status(404).json({
             status: 'Falhou, busca não encontrada',
-            message: err,
+            message: 'Não há agentes disponiveis',
         });
     }
 };
 
 exports.obterAgentePorID = async (req, res) => {
+    // Método de validação de id - como o método isValid do mongoose reconhece o id como válido
+    // quando tem um espaço ou traço entre palavras, a solução que encontrei para nomes
+    // compostos colocados nos parâmetros da url foi substituir o traço para sem espaço, e
+    // assim o isValid verifica e sabe que não é válido e da continuidade ao programa
+    let id = req.params.id;
+    id = id.replace('-', '');
+
     try {
         // Retorna verdadeiro se for um ObjectId valido
-        if (mongoose.Types.ObjectId.isValid(req.params)) {
+        if (mongoose.Types.ObjectId.isValid(id)) {
+            console.log('É valido');
             const agente = await Agente.findById(req.params.id);
             res.status(200).json({ status: 'Sucesso', data: agente });
 
@@ -72,7 +84,7 @@ exports.obterAgentePorID = async (req, res) => {
             if (agente === null) {
                 res.status(404).json({
                     status: 'Falhou',
-                    message: 'Não encontrado',
+                    message: 'Agente não encontrado',
                 });
             } else {
                 res.status(200).json({ status: 'Sucesso', data: agente });
@@ -88,6 +100,8 @@ exports.obterAgentePorID = async (req, res) => {
 
 exports.adicionarAgente = async (req, res) => {
     try {
+        req.body.nome = _.startCase(req.body.nome);
+
         const agente = await Agente.create(req.body);
 
         res.status(201).json({
