@@ -1,0 +1,20 @@
+{
+  "name": "api-valorant",
+  "version": "1.0.0",
+  "description": "Api do jogo valorant",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Geraldo Vicente",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.8.2"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.1"
+  }
+}
