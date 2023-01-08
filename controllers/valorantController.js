@@ -1,12 +1,16 @@
-const fs = require('fs');
+const Agente = require('./../models/agentesModels');
+const Arma = require('./../models/armasModels');
 
-//const armasValorant = JSON.parse(fs.readFileSync('./armas.json', 'utf-8'));
+exports.obterTudo = async (req, res) => {
+    const todosAgentes = await Agente.find();
+    const todasArmas = await Arma.find();
 
-// exports.obterTudo = (req, res) => {
-//     res.status(200).json({
-//         status: 'Sucess',
-//         data: {
-//             campeoes: campeoesValorant,
-//         },
-//     });
-// };
+    res.status(200).json({
+        status: 'Sucesso',
+        results: todasArmas.length + todosAgentes.length,
+        data: {
+            agentes: todosAgentes,
+            armas: todasArmas,
+        },
+    });
+};
