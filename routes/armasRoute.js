@@ -1,18 +1,18 @@
-// const express = require('express');
+const express = require('express');
 
-// const armasController = require('../controllers/armasController');
+const armasController = require('../controllers/armasController');
 
-// const router = express.Router();
+const router = express.Router();
 
-// router
-//     .route('/')
-//     .get(armasController.obterTodasArmas)
-//     .post(armasController.criarArma);
+router
+    .route('/')
+    .get(armasController.obterTodasArmas)
+    .post(armasController.adicionarArma);
 
-// router
-//     .route('/:id')
-//     .get(armasController.obterUmaArma)
-//     .patch(armasController.atualizarArma)
-//     .delete(armasController.deletarArma);
+router
+    .route('/:id')
+    .get(armasController.obterArma)
+    .patch(armasController.atualizarArma)
+    .delete(armasController.deletarArma);
 
-// module.exports = router;
+module.exports = router;

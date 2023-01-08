@@ -1,4 +1,3 @@
-const { string } = require('joi');
 const mongoose = require('mongoose');
 
 const armasSchema = new mongoose.Schema({
@@ -9,6 +8,15 @@ const armasSchema = new mongoose.Schema({
     },
     categoria: {
         type: String,
+        enum: [
+            'Pistolas',
+            'Sub-metralhadoras',
+            'Escopetas',
+            'Rifles',
+            'Metralhadoras',
+            'Armas brancas',
+        ],
+        required: [true, 'Uma arma precisa de uma categoria'],
     },
     descricao: {
         descricao: {
@@ -17,9 +25,8 @@ const armasSchema = new mongoose.Schema({
         },
         disparo: {
             type: String,
-        },
-        distanciaTiro: {
-            type: String,
+            enum: ['Automático', 'Semi-automático', 'Corpo-a-corpo'],
+            required: [true, 'Uma arma precisa de um tipo de disparo'],
         },
         dano: {
             cabeca: {
@@ -32,6 +39,10 @@ const armasSchema = new mongoose.Schema({
                 type: Number,
             },
         },
+    },
+    imagem: {
+        type: String,
+        default: '/',
     },
 });
 
