@@ -1,32 +1,40 @@
 const fs = require('fs');
 const mongoose = require('mongoose');
 const _ = require('lodash');
+const joi = require('joi');
 
-const { dirname } = require('path');
-const appDir = dirname(require.main.filename);
 const Agente = require('./../models/agentesModels');
 
 // Middlewares functions
-exports.checkEmpty = (req, res, next) => {
-    if (_.isEmpty(req.body)) {
-        return res.status(404).json({
-            status: 'Falhou',
-            message: 'Está faltando algo',
-        });
-    }
-    next();
-};
 
-exports.checkPropriedades = (req, res, next) => {
-    if (
-        !req.body.nome &&
-        !req.body.categoria &&
-        !req.body.historia &&
-        !req.body.habilidades
-    ) {
-        return res.status(404).json({
+exports.validarDadosAgente = (req, res, next) => {
+    const agenteSchema = joi
+        .object({
+            nome: joi.string().min(3).max(30).required(),
+            categoria: joi
+                .string()
+                .valid('Duelista', 'Controlador', 'Iniciador', 'Sentinela'),
+            historia: joi.string().min(10).required(),
+            habilidades: joi
+                .array()
+                .min(5)
+                .max(5)
+                .items(
+                    joi.object({
+                        nome: joi.string(),
+                        descricao: joi.string(),
+                        tempoDeRecarga: joi.number().min(0).max(120),
+                    }),
+                ),
+        })
+        .options({ abortEarly: false });
+
+    const result = agenteSchema.validate(req.body);
+
+    if (result.error) {
+        return res.status(400).json({
             status: 'Falhou',
-            message: 'Faltando propriedades',
+            message: result.error.message || 'Erro',
         });
     }
 
@@ -40,7 +48,7 @@ exports.obterTodosAgentes = async (req, res) => {
 
         if (!_.isEmpty(agentes)) {
             return res.status(200).json({
-                status: 'Sucess',
+                status: 'Sucesso',
                 results: agentes.length,
                 data: {
                     agentes,
@@ -58,28 +66,22 @@ exports.obterTodosAgentes = async (req, res) => {
 };
 
 exports.obterAgentePorID = async (req, res) => {
-    // Método de validação de id - como o método isValid do mongoose reconhece o id como válido
-    // quando tem um espaço ou traço entre palavras, a solução que encontrei para nomes
-    // compostos colocados nos parâmetros da url foi substituir o traço para sem espaço, e
-    // assim o isValid verifica e sabe que não é válido e da continuidade ao programa
-    let id = req.params.id;
-    id = id.replace('-', '');
-
     try {
-        // Retorna verdadeiro se for um ObjectId valido
-        if (mongoose.Types.ObjectId.isValid(id)) {
-            console.log('É valido');
+        // Retorna verdadeiro se for um ObjectId valido, se for, busca no bd o agente com o id inserido
+        if (mongoose.isObjectIdOrHexString(req.params.id)) {
             const agente = await Agente.findById(req.params.id);
             res.status(200).json({ status: 'Sucesso', data: agente });
 
-            // Retorna falso se for um Object Id inválido
+            // Retorna falso se for um Object Id inválido, e se for falso quer dizer que pode ser um
+            // nome de agente, então utilizo o pacote lodash para formatar a string com o padrão de nome
+            // estabelecido, e após isso a procura no bd.
         } else {
             let id = _.kebabCase(req.params.id);
             id = _.startCase(id);
 
             const agente = await Agente.findOne({ nome: id });
 
-            // Se não for encontrado nenhum agente com o parâmetro informado
+            // Se não for encontrado nenhum agente com o parâmetro/nome informado
             // é retornado um null, e se for null, ocorre um erro
             if (agente === null) {
                 res.status(404).json({
