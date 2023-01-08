@@ -9,7 +9,7 @@ const agenteSchema = new mongoose.Schema({
     categoria: {
         type: String,
         enum: ['Duelista', 'Controlador', 'Iniciador', 'Sentinela'],
-        required: [true],
+        required: [true, 'Um agente precisa de uma categoria'],
     },
     historia: {
         type: String,
@@ -26,10 +26,10 @@ const agenteSchema = new mongoose.Schema({
             },
             descricao: {
                 type: String,
-                required: [true],
+                required: [true, 'Uma habilidade precisa de uma descrição'],
             },
             tempoDeRecarga: {
-                type: Number,
+                type: String,
                 required: [
                     true,
                     'Erro, o tempo de recarga precisa de um valor',
@@ -37,6 +37,10 @@ const agenteSchema = new mongoose.Schema({
             },
         },
     ],
+    imagem: {
+        type: String,
+        default: '/',
+    },
 });
 
 const Agente = mongoose.model('Agente', agenteSchema);

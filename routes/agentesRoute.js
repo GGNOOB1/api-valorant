@@ -4,8 +4,6 @@ const agentesController = require('../controllers/agentesController');
 
 const router = express.Router();
 
-//router.param('id', agentesController.checkID);
-
 router
     .route('/')
     .get(agentesController.obterTodosAgentes)

@@ -1,4 +1,3 @@
-const fs = require('fs');
 const mongoose = require('mongoose');
 const _ = require('lodash');
 const joi = require('joi');
@@ -17,13 +16,13 @@ exports.validarDadosAgente = (req, res, next) => {
             historia: joi.string().min(10).required(),
             habilidades: joi
                 .array()
-                .min(5)
-                .max(5)
+                .min(4)
+                .max(4)
                 .items(
                     joi.object({
                         nome: joi.string(),
                         descricao: joi.string(),
-                        tempoDeRecarga: joi.number().min(0).max(120),
+                        tempoDeRecarga: joi.string(),
                     }),
                 ),
         })
@@ -107,7 +106,7 @@ exports.adicionarAgente = async (req, res) => {
         const agente = await Agente.create(req.body);
 
         res.status(201).json({
-            status: 'Sucess',
+            status: 'Sucesso',
             message: 'Dados inseridos com sucesso',
             data: agente,
         });
