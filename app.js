@@ -9,6 +9,6 @@ app.use(express.json());
 
 // app.use('/api/v1/agentes', valorantRoute);
 app.use('/api/v1/agentes', campeoesRoute);
-// app.use('/api/v1/agentes', armasRoute);
+// app.use('/api/v1/armas', armasRoute);
 
 module.exports = app;
