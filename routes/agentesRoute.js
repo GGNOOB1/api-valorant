@@ -9,14 +9,16 @@ const router = express.Router();
 router
     .route('/')
     .get(agentesController.obterTodosAgentes)
-    .post(agentesController.adicionarAgente);
+    .post(
+        agentesController.validarDadosAgente,
+        agentesController.adicionarAgente,
+    );
 
 router
     .route('/:id')
     .get(agentesController.obterAgentePorID)
     .patch(
-        agentesController.checkEmpty,
-        agentesController.checkPropriedades,
+        agentesController.validarDadosAgente,
         agentesController.atualizarAgente,
     )
     .delete(agentesController.deletarAgente);
