@@ -6,7 +6,7 @@ Está API foi construída afim de colocar os conhecimentos de node js, javascrip
 
 ## Como funciona?
 
-Para aqueles que não conhecem o jogo Valorant, irei resumidamente contar um pouco de como ele funciona. O jogo funciona com duas equipes de cinco jogadores uma contra a outra, com cada equipe tendo que cumprir determinados objetivos para vencer as rodadas. Uma equipe assume o papel de atacantes, enquanto a outra equipe assume o papel de defensores. Cada equipe possui agentes, e esses agentes utilizam armas. A partir dessas informações, a API tem como objetivo obter dados de todos agentes, obter dados de um agente, atualizar um agente ou deletar um agente, assim como também fazer o mesmo com as armas.
+Para aqueles que não conhecem o jogo Valorant, irei resumidamente contar um pouco de como ele funciona. O jogo funciona com duas equipes de cinco jogadores uma contra a outra com cada equipe tendo que cumprir determinados objetivos para vencer as rodadas, cada pessoa de uma equipe é um agente que possui 4 habilidades. Uma equipe assume o papel de atacantes, enquanto a outra equipe assume o papel de defensores. Cada equipe possui agentes, e esses agentes utilizam armas. A partir dessas informações, a API tem como objetivo obter dados de todos agentes, obter dados de um agente, atualizar um agente ou deletar um agente, assim como também fazer o mesmo com as armas.
 
 ## Depêndencias utilizadas
 
@@ -42,17 +42,24 @@ Para utilizar a API é necessário uma ferramenta que dê suporte à documentaç
     localhost:3000/api/v1/armas/:id
     localhost:3000/api/v1/valorant
 
-### Primeiro, temos as rotas para o método GET:
+### Rotas para o método GET:
 
 **localhost:3000/api/v1/agentes** - Listará todos os agentes disponíveis no banco de dados
 **localhost:3000/api/v1/armas** - Listará todas as armas disponíveis no banco de dados
 **localhost:3000/api/v1/valorant** - Listará todos os agentes e armas disponíveis no banco de dados
 
-### Segundo, temos as rotas para o método POST:
+**localhost:3000/api/v1/agentes/:id** - Lista apenas um agente | Obs: É possível utilizar o nome do agente ou id do agente
+**localhost:3000/api/v1/agentes/:id** - Lista apenas uma arma | Obs: É possível utilizar o nome da arma ou id do arma
+
+> É esperado o status code 200(ok) para requisições com sucesso e o status code 404(Not Found) para dados não encontrados
+
+### Rotas para o método POST - Agentes:
 
 **localhost:3000/api/v1/agentes** - Cadastrará os dados dos agentes no banco de dados da API. Para isso
-será necessário preencher corretamente os campos de dados de um agente. Para isso logo abaixo terá o template
-e após um exemplo com dados.
+será necessário preencher corretamente os campos de dados de um agente utilizando o formato JSON na aba body
+do PostMan. Então logo abaixo terá o template e após um exemplo com dados para mostrar como deve ser.
+
+> É esperado o status code 201(Created) para requisições com sucesso e o status code 400(Bad Request) para erro do cliente ou solicitação inválida
 
 #### Template
 
@@ -120,5 +127,143 @@ e após um exemplo com dados.
 
 ```
 
-    **localhost:3000/api/v1/armas** - Listará todas as armas disponíveis no banco de dados
-    **localhost:3000/api/v1/valorant** - Listará todos os agentes e armas disponíveis no banco de dados
+### Rotas para o método POST - Armas:
+
+**localhost:3000/api/v1/armas** - Cadastrará os dados das armas no banco de dados da API. Para isso
+será necessário preencher corretamente os campos de dados de um agente utilizando o formato JSON na aba body
+do PostMan. Então logo abaixo terá o template e após um exemplo com dados para mostrar como deve ser.
+
+> É esperado o status code 201(Created) para requisições com sucesso e o status code 400(Bad Request) para erro do cliente ou solicitação inválida
+
+#### Template
+
+```JSON
+
+{
+    "nome": "Colocar aqui um nome de arma com no minimo 3 letras e no máximo 1 nome composto, este campo será único, então terá uma validação mais forte",
+    "categoria": "Colocar aqui uma das categorias a seguir: ['Pistolas','Sub-metralhadoras','Escopetas','Rifles','Metralhadoras','Armas brancas'], seguindo exatamente cada letra maiúscula e minúscula",
+    "descricao": "Colocar a descrição da arma",
+    "disparo": "Colocar um dos modos de disparo a seguir: ['Automático', 'Semi-automático', 'Corpo-a-corpo'], seguindo exatamente cada letra maiúscula e minúscula",
+    "dano": {
+            "cabeca": "Colocar aqui o dano na cabeça com o tipo de dado number",
+            "corpo": "Colocar aqui o dano no corpo com o tipo de dado number",
+            "perna": "Colocar aqui o dano na perna com o tipo de dado number"
+        }
+
+    }
+
+```
+
+#### Exemplo com dados reais
+
+```JSON
+
+{
+    "nome": "Phanton",
+    "categoria": "Rifles",
+    "descricao": "Vandal é um rifle automático que possui dois tipos de disparo. O primeiro, com o botão esquerdo, é o tiro normal, enquanto o segundo, com o botão direito, coloca uma mira que dá 1.25x de zoom e diminui levemente a taxa de disparo. Ele carrega 25 balas no pente e tem penetração media na parede em relação ao varados",
+    "disparo": "Automático",
+    "dano": {
+            "cabeca": 160,
+            "corpo": 40,
+            "perna": 34
+        }
+
+    }
+
+
+```
+
+### Rotas para o método PATCH - Agentes:
+
+**localhost:3000/api/v1/agentes/:id** - Neste método de requisição será possível atualizar uma parte do documendo
+do agente pelo id, sendo obrigatório utilizar o id do agente para fazer as atualizações e também ter um dos campos
+do agente senão ocasionará em erro de validação. Para isso será necessário preencher corretamente os campos de
+dados de um agente utilizando o formato JSON na aba body do PostMan. Então logo abaixo terá a lista das propriedades
+que poderão ser alteradas:
+
+obs: Caso necessário leia o template novamente no método POST para lembrar as propriedades que precisam ter um dos
+nomes pré-definidos, ou seja, que são construidos com enums.
+
+> É esperado o status code 200(Ok) para atualizações com sucesso e o status code 404(Not found) se não for encontrado nenhum agente para ser modificado
+
+```JSON
+
+{
+    "nome": "",
+    "historia": "",
+    "categoria": "",
+    "habilidades": [
+        {
+            "nome": "",
+            "tempoDeRecarga": "",
+            "descricao": ""
+        },
+        {
+            "nome": "",
+            "tempoDeRecarga": "",
+            "descricao": ""
+        },
+        {
+            "nome": "",
+            "tempoDeRecarga": "",
+            "descricao": ""
+        },
+        {
+            "nome": "",
+            "tempoDeRecarga": "",
+            "descricao": ""
+        }
+    ]
+
+}
+
+```
+
+### Rotas para o método PATCH - Armas:
+
+**localhost:3000/api/v1/armas/:id** -Neste método de requisição será possível atualizar uma parte do documendo
+da arma pelo id, sendo obrigatório utilizar o id da arma para fazer as atualizações e também ter um dos campos
+da arma senão ocasionará em erro de validação. Para isso será necessário preencher corretamente os campos de
+dados de uma arma utilizando o formato JSON na aba body do PostMan. Então logo abaixo terá a lista das propriedades
+que poderão ser alteradas:
+
+obs: Caso necessário leia o template novamente no método POST para lembrar as propriedades que precisam ter um dos
+nomes pré-definidos, ou seja, que são construidas com enums.
+
+> É esperado o status code 200(Ok) para atualizações com sucesso e o status code 404(Not found) se não for encontrado nenhuma arma para ser atualizada
+
+```JSON
+
+{
+    "nome": "",
+    "categoria": "",
+    "descricao": "",
+    "disparo": "",
+    "dano": {
+            "cabeca": ,
+            "corpo": ,
+            "perna":
+        }
+
+    }
+
+
+```
+
+### Rotas para o método DELETE - Agentes:
+
+> É esperado o status code 204(No Content) para exclusão com sucesso e o status code 404(Not found) se não for encontrado nenhuma agente ou arma para ser atualizada
+
+**localhost:3000/api/v1/agentes/:id** - Neste método de requisição será possível excluir um agente pelo id, sendo obrigatório utilizar o id do agente para fazer a exclusão. Para realiza-lá, basta escolher o método de requisição DELETE, colocar a URL e
+no final o id do agente. Como no exemplo abaixo:
+
+**localhost:3000/api/v1/agentes/:63bb25327337a83e112d877b**
+
+### Rotas para o método DELETE - Armas:
+
+**localhost:3000/api/v1/armas/:id** - Neste método de requisição será possível excluir uma arma pelo id, sendo obrigatório
+utilizar o id da arma para fazer a exclusão. Para realiza-lá, basta escolher o método de requisição DELETE, colocar a URL e
+no final o id do agente. Como no exemplo abaixo:
+
+**localhost:3000/api/v1/armas/:63bb25327337a83e112d877b**
