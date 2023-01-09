@@ -50,9 +50,13 @@ Para utilizar a API é necessário uma ferramenta que dê suporte à documentaç
 
 **localhost:3000/api/v1/valorant** - Listará todos os agentes e armas disponíveis no banco de dados
 
-**localhost:3000/api/v1/agentes/:id** - Lista apenas um agente | Obs: É possível utilizar o nome do agente ou id do agente
+**localhost:3000/api/v1/agentes/:id** - Lista apenas um agente
+
+> É possível utilizar o id do agente ou nome do agente composto ou único, nomes compostos deverão seguir este padrão: maria-luiza
 
 **localhost:3000/api/v1/agentes/:id** - Lista apenas uma arma | Obs: É possível utilizar o nome da arma ou id do arma
+
+> É possível utilizar o id da arma ou nome da arma composto ou único, nomes compostos deverão seguir este padrão: sub-thompsom
 
 > É esperado o status code 200(ok) para requisições com sucesso e o status code 404(Not Found) para dados não encontrados
 
