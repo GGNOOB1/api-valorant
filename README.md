@@ -45,10 +45,13 @@ Para utilizar a API é necessário uma ferramenta que dê suporte à documentaç
 ### Rotas para o método GET:
 
 **localhost:3000/api/v1/agentes** - Listará todos os agentes disponíveis no banco de dados
+
 **localhost:3000/api/v1/armas** - Listará todas as armas disponíveis no banco de dados
+
 **localhost:3000/api/v1/valorant** - Listará todos os agentes e armas disponíveis no banco de dados
 
 **localhost:3000/api/v1/agentes/:id** - Lista apenas um agente | Obs: É possível utilizar o nome do agente ou id do agente
+
 **localhost:3000/api/v1/agentes/:id** - Lista apenas uma arma | Obs: É possível utilizar o nome da arma ou id do arma
 
 > É esperado o status code 200(ok) para requisições com sucesso e o status code 404(Not Found) para dados não encontrados
