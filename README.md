@@ -41,14 +41,84 @@ Para utilizar a API é necessário uma ferramenta que dê suporte à documentaç
     localhost:3000/api/v1/armas/:id
     localhost:3000/api/v1/valorant
 
-Primeiro, temos as rotas para o método GET:
+### Primeiro, temos as rotas para o método GET:
 
-**localhost:3000/api/v1/agentes** - Listará todos os agentes disponíveis no banco de dados
-**localhost:3000/api/v1/armas** - Listará todas as armas disponíveis no banco de dados
-**localhost:3000/api/v1/valorant** - Listará todos os agentes e armas disponíveis no banco de dados
+    **localhost:3000/api/v1/agentes** - Listará todos os agentes disponíveis no banco de dados
+    **localhost:3000/api/v1/armas** - Listará todas as armas disponíveis no banco de dados
+    **localhost:3000/api/v1/valorant** - Listará todos os agentes e armas disponíveis no banco de dados
 
-Segundo, temos as rotas para o método POST:
+### Segundo, temos as rotas para o método POST:
 
-**localhost:3000/api/v1/agentes** - Listará todos os agentes disponíveis no banco de dados
-**localhost:3000/api/v1/armas** - Listará todas as armas disponíveis no banco de dados
-**localhost:3000/api/v1/valorant** - Listará todos os agentes e armas disponíveis no banco de dados
+    **localhost:3000/api/v1/agentes** - Cadastrará os dados dos agentes no banco de dados da API. Para isso será necessário preencher corretamente os campos de dados de um agente. Para isso logo abaixo terá o template e após um exemplo com dados.
+
+#### Template
+
+    ```JSON
+
+    {
+    "nome": "Colocar aqui um nome de agente com no minimo 3 letras e no máximo 1 nome composto, este campo será único, então terá uma validação mais forte",
+    "historia": "Colocar a história da/do agente",
+    "categoria": "Colocar uma das 6 categorias a seguir: ['Duelista', 'Controlador', 'Iniciador', 'Sentinela'] , exatamente igual senão ocasionará ume erro de validação",
+    "habilidades": [
+        {
+            "nome": "Colocar o nome da habilidade",
+            "tempoDeRecarga": "Colocar o tipo de tempo de regarga como '1 seg' ou '3 cargas' ",
+            "descricao": "Colocar uma descrição de habilidade"
+        },
+        {
+            "nome": "Colocar o nome da habilidade",
+            "tempoDeRecarga": "Colocar o tipo de tempo de regarga como '1 seg' ou '3 cargas' ",
+            "descricao": "Colocar uma descrição de habilidade"
+        },
+        {
+            "nome": "Colocar o nome da habilidade",
+            "tempoDeRecarga": "Colocar o tipo de tempo de regarga como '1 seg' ou '3 cargas' ",
+            "descricao": "Colocar uma descrição de habilidade"
+        },
+        {
+            "nome": "Colocar o nome da habilidade",
+            "tempoDeRecarga": "Colocar o tipo de tempo de regarga como '1 seg' ou '3 cargas' ",
+            "descricao": "Colocar uma descrição de habilidade"
+        }
+        ]
+
+    }
+
+    ```
+
+#### Exemplo com dados reais
+
+```JSON
+{
+    "nome": "Skye",
+    "historia": "Skye é a 13º agente de Valorant e a primeira vindo da Austrália. Chamada por Sage para ajudar a salvar o mundo, ela está se juntando às forças do futuro próximo da Terra e compartilhando sua experiência em vida selvagem no campo de batalha. Skye definitivamente não é um fragger.",
+    "categoria": "Iniciador",
+    "habilidades": [
+        {
+            "nome": "Predador explosivo",
+            "tempoDeRecarga": "1 carga",
+            "descricao": "EQUIPE um amuleto de lobo-da-tasmânia. DISPARE para enviar e controlar esse predador. Enquanto estiver no controle, DISPARE para saltar para a frente. O lobo gera uma explosão e causa dano aos inimigos diretamente atingidos."
+        },
+        {
+            "nome": "Reflorescer",
+            "tempoDeRecarga": "4 segundos",
+            "descricao": "Skye cura seus aliados em uma grande área ao seu redor. O tempo dura o bastante para restaurar 100 pontos de vida em aproximadamente 4 segundos. O feitiço pode ser usado mais de uma vez, mas o somatório de todas as vezes segue como 4 segundos."
+        },
+        {
+            "nome": "Luz Desbravadora",
+            "tempoDeRecarga": "3 cargas (1 grátis)",
+            "descricao": "Skye invoca um falcão que sai em linha reta por padrão. Ela também pode controlar o falcão e fazer curvas mantendo o botão esquerdo do mouse pressionado. Se Skye pressionar E novamente antes que o falcão desapareça, o falcão explode e cega os inimigos por 2 segundos. Os jogadores que estão perto do falcão no momento de sua explosão, mas não estão olhando para ele, recebem o flash por 0,5 segundo. Skye vê um marcador de sucesso em sua tela se ela conseguir atordoar um inimigo."
+        },
+        {
+            "nome": "Rastreadores",
+            "tempoDeRecarga": "6 pontos",
+            "descricao": "Skye invoca três rastreadores que vão automaticamente para os três oponentes mais próximos. Assim como outras magias da agente, eles também podem ser destruídos por inimigos. Se atingirem o alvo, ele ficará cego por 4 segundos. O mesmo jogador só pode ser alvo de um rastreador. Se apenas um ou dois oponentes estiverem vivos, apenas um ou dois rastreadores serão invocados ao invés do padrão de três. O rastreador desaparece se percorrer cerca de metade do mapa sem atingir seu alvo."
+        }
+    ]
+
+}
+
+```
+
+    **localhost:3000/api/v1/armas** - Listará todas as armas disponíveis no banco de dados
+    **localhost:3000/api/v1/valorant** - Listará todos os agentes e armas disponíveis no banco de dados
