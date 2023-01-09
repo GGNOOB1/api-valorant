@@ -42,6 +42,8 @@ Para utilizar a API é necessário uma ferramenta que dê suporte à documentaç
     localhost:3000/api/v1/armas/:id
     localhost:3000/api/v1/valorant
 
+> Na última seção do readme tem 2 exemplos de armas e 2 exemplos de agente já criados no banco de dados para serem usados para teste
+
 ### Rotas para o método GET:
 
 **localhost:3000/api/v1/agentes** - Listará todos os agentes disponíveis no banco de dados
@@ -166,7 +168,7 @@ do PostMan. Então logo abaixo terá o template e após um exemplo com dados par
 ```JSON
 
 {
-    "nome": "Phanton",
+    "nome": "Vandal",
     "categoria": "Rifles",
     "descricao": "Vandal é um rifle automático que possui dois tipos de disparo. O primeiro, com o botão esquerdo, é o tiro normal, enquanto o segundo, com o botão direito, coloca uma mira que dá 1.25x de zoom e diminui levemente a taxa de disparo. Ele carrega 25 balas no pente e tem penetração media na parede em relação ao varados",
     "disparo": "Automático",
@@ -274,3 +276,43 @@ utilizar o id da arma para fazer a exclusão. Para realiza-lá, basta escolher o
 no final o id do agente. Como no exemplo abaixo:
 
 **localhost:3000/api/v1/armas/:63bb25327337a83e112d877b**
+
+## Observações
+
+A API foi construída para testar conhecimentos, sendo assim, não terá todos os dados do jogo Valorant da Riot Games, terá apenas armazenado no banco de dados 2 agentes exemplos e 2 armas exemplos, será possível obter elas pelo método GET através dos seguintes id:
+
+### Agentes
+
+• Agente Reyna:
+
+**localhost:3000/api/v1/agentes/63bbf4ac4877041ac17b3e6c**
+
+ou
+
+**localhost:3000/api/v1/agentes/reyna**
+
+• Agente Sage:
+
+**localhost:3000/api/v1/agentes/63bbf5ae4877041ac17b3e72**
+
+ou
+
+**localhost:3000/api/v1/agentes/sage**
+
+### Armas
+
+• Arma Phantom:
+
+**localhost:3000/api/v1/armas/63bbf7354877041ac17b3e7a**
+
+ou
+
+**localhost:3000/api/v1/armas/phantom**
+
+• Arma Judge:
+
+**localhost:3000/api/v1/armas/63bbf7284877041ac17b3e78**
+
+ou
+
+**localhost:3000/api/v1/armas/judge**
