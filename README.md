@@ -56,9 +56,8 @@ e após um exemplo com dados.
 
 #### Template
 
-    ```json
-
-    {
+```JSON
+{
     "nome": "Colocar aqui um nome de agente com no minimo 3 letras e no máximo 1 nome composto, este campo será único, então terá uma validação mais forte",
     "historia": "Colocar a história da/do agente",
     "categoria": "Colocar uma das 6 categorias a seguir: ['Duelista', 'Controlador', 'Iniciador', 'Sentinela'] , exatamente igual senão ocasionará ume erro de validação",
@@ -83,11 +82,9 @@ e após um exemplo com dados.
             "tempoDeRecarga": "Colocar o tipo de tempo de regarga como '1 seg' ou '3 cargas' ",
             "descricao": "Colocar uma descrição de habilidade"
         }
-        ]
-
-    }
-
-    ```
+    ]
+}
+```
 
 #### Exemplo com dados reais
 
