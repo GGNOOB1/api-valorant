@@ -1,33 +1,34 @@
 const mongoose = require('mongoose');
+const Agente = require('./../models/agentesModels');
+
 const _ = require('lodash');
 const joi = require('joi');
-
-const Agente = require('./../models/agentesModels');
 
 // Middlewares functions
 
 exports.validarDadosAgente = (req, res, next) => {
-    const agenteSchema = joi
-        .object({
-            nome: joi.string().min(3).max(30).required(),
-            categoria: joi
-                .string()
-                .valid('Duelista', 'Controlador', 'Iniciador', 'Sentinela'),
-            historia: joi.string().min(10).required(),
-            habilidades: joi
-                .array()
-                .min(4)
-                .max(4)
-                .items(
-                    joi.object({
-                        nome: joi.string(),
-                        descricao: joi.string(),
-                        tempoDeRecarga: joi.string(),
-                    }),
-                ),
-        })
-        .options({ abortEarly: false });
+    // Schema utilizando o pacote joi para validar os dados recebidos no corpo das
+    // requisições que utilizam desse middleware
+    const agenteSchema = joi.object({
+        nome: joi.string().min(3).max(30).required(),
+        categoria: joi
+            .string()
+            .valid('Duelista', 'Controlador', 'Iniciador', 'Sentinela'),
+        historia: joi.string().min(10).required(),
+        habilidades: joi
+            .array()
+            .min(4)
+            .max(4)
+            .items(
+                joi.object({
+                    nome: joi.string(),
+                    descricao: joi.string(),
+                    tempoDeRecarga: joi.string(),
+                }),
+            ),
+    });
 
+    // Valida os dados do corpo da requisição utilizando o esquema e verifica erros
     const result = agenteSchema.validate(req.body);
 
     if (result.error) {
@@ -41,10 +42,13 @@ exports.validarDadosAgente = (req, res, next) => {
 };
 
 // Manipuladores de rotas
+
 exports.obterTodosAgentes = async (req, res) => {
     try {
+        // Variavel com todos os dados do bd
         const agentes = await Agente.find();
 
+        // Utilizo o método de validação do pacote lodash para conferir se possui dados no bd
         if (!_.isEmpty(agentes)) {
             return res.status(200).json({
                 status: 'Sucesso',
@@ -101,8 +105,12 @@ exports.obterAgentePorID = async (req, res) => {
 
 exports.adicionarAgente = async (req, res) => {
     try {
+        //  Especificando que o nome único que será recebido na requisição terá que
+        // ter suas letras iniciais maiúsculas
         req.body.nome = _.startCase(req.body.nome);
 
+        // Utilizando o Schema de agente criado no models para criar um documento
+        // com os dados do corpo da requisição, já validados nas middleware functions
         const agente = await Agente.create(req.body);
 
         res.status(201).json({
@@ -120,7 +128,9 @@ exports.adicionarAgente = async (req, res) => {
 
 exports.atualizarAgente = async (req, res) => {
     try {
+        // Encontrando dados pelo id e atualizando com os dados recebidos na requisição patch
         const agente = await Agente.findByIdAndUpdate(req.params.id, req.body, {
+            // A propriedade new:true, significa que será retornado o novo documento atualizado
             new: true,
         });
         res.status(200).json({ status: 'Sucesso', data: { agente } });
@@ -134,6 +144,7 @@ exports.atualizarAgente = async (req, res) => {
 
 exports.deletarAgente = async (req, res) => {
     try {
+        // Encontra os dados pelo Id e os deleta
         const agente = await Agente.findByIdAndDelete(req.params.id);
         res.status(204).json({ status: 'Sucesso', data: { agente } });
     } catch (err) {
