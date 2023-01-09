@@ -1,48 +1,40 @@
 const mongoose = require('mongoose');
+const Arma = require('./../models/armasModels');
+
 const _ = require('lodash');
 const joi = require('joi');
 
-const Arma = require('./../models/armasModels');
+// Middlewares functions
 
 exports.validarDadosArmas = (req, res, next) => {
-    const armaSchema = joi
-        .object({
-            nome: joi.string().min(3).max(30).required(),
-            categoria: joi
-                .string()
-                .valid(
-                    'Pistolas',
-                    'Sub-metralhadoras',
-                    'Escopetas',
-                    'Rifles',
-                    'Metralhadoras',
-                    'Armas brancas',
-                ),
+    // Schema utilizando o pacote joi para validar os dados recebidos no corpo das
+    // requisições que utilizam desse middleware
+    const armaSchema = joi.object({
+        nome: joi.string().min(3).max(30).required(),
+        categoria: joi
+            .string()
+            .valid(
+                'Pistolas',
+                'Sub-metralhadoras',
+                'Escopetas',
+                'Rifles',
+                'Metralhadoras',
+                'Armas brancas',
+            )
+            .required(),
+        descricao: joi.string(),
+        disparo: joi
+            .string()
+            .valid('Automático', 'Semi-automático', 'Corpo-a-corpo')
+            .required(),
+        dano: joi.object({
+            cabeca: joi.number(),
+            corpo: joi.number(),
+            perna: joi.number(),
+        }),
+    });
 
-            descricao: joi
-                .object()
-                .min(4)
-                .max(4)
-                .items(
-                    joi.object({
-                        descricao: joi.string(),
-                        disparo: joi
-                            .string()
-                            .valid(
-                                'Automático',
-                                'Semi-automático',
-                                'Corpo-a-corpo',
-                            ),
-                        dano: joi.object({
-                            cabeca: joi.number(),
-                            corpo: joi.number,
-                            perna: joi.number(),
-                        }),
-                    }),
-                ),
-        })
-        .options({ abortEarly: false });
-
+    // Valida os dados do corpo da requisição utilizando o esquema e verifica erros
     const result = armaSchema.validate(req.body);
 
     if (result.error) {
@@ -55,17 +47,29 @@ exports.validarDadosArmas = (req, res, next) => {
     next();
 };
 
+// Manipuladores de rotas
+
 exports.obterTodasArmas = async (req, res) => {
     try {
+        // Variavel com todos os dados do bd
         const todasArmas = await Arma.find();
 
-        res.status(200).json({
-            status: 'Sucesso',
-            results: todasArmas.length,
-            data: todasArmas,
-        });
+        // Utilizo o método de validação do pacote lodash para conferir se possui dados no bd
+        if (!_.isEmpty(todasArmas)) {
+            return res.status(200).json({
+                status: 'Sucesso',
+                results: todasArmas.length,
+                data: {
+                    todasArmas,
+                },
+            });
+        }
+        return err;
     } catch (err) {
-        res.status(404).json({ status: 'Erro', message: 'Não encontrado' });
+        res.status(404).json({
+            status: 'Erro',
+            message: 'Nenhuma arma foi encontrada',
+        });
     }
 };
 
@@ -106,8 +110,12 @@ exports.obterArma = async (req, res) => {
 
 exports.adicionarArma = async (req, res) => {
     try {
+        //  Especificando que o nome único que será recebido na requisição terá que
+        // ter suas letras iniciais maiúsculas
         req.body.nome = _.startCase(req.body.nome);
 
+        // Utilizando o Schema de armas criado no models para criar um documento
+        // com os dados do corpo da requisição, já validados nas middleware functions
         const arma = await Arma.create(req.body);
 
         res.status(201).json({
@@ -125,7 +133,9 @@ exports.adicionarArma = async (req, res) => {
 
 exports.atualizarArma = async (req, res) => {
     try {
+        // Encontrando dados pelo id e atualizando com os dados recebidos na requisição patch
         const arma = await Arma.findByIdAndUpdate(req.params.id, req.body, {
+            // A propriedade new:true, significa que será retornado o novo documento atualizado
             new: true,
         });
         res.status(200).json({ status: 'Sucesso', data: { arma } });
@@ -139,6 +149,7 @@ exports.atualizarArma = async (req, res) => {
 
 exports.deletarArma = async (req, res) => {
     try {
+        // Encontra os dados pelo Id e os deleta
         const arma = await Arma.findByIdAndDelete(req.params.id);
         res.status(204).json({ status: 'Sucesso', data: { arma } });
     } catch (err) {

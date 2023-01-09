@@ -19,25 +19,23 @@ const armasSchema = new mongoose.Schema({
         required: [true, 'Uma arma precisa de uma categoria'],
     },
     descricao: {
-        descricao: {
-            type: String,
-            required: [true, 'A arma precisa de uma descrição'],
+        type: String,
+        required: [true, 'A arma precisa de uma descrição'],
+    },
+    disparo: {
+        type: String,
+        enum: ['Automático', 'Semi-automático', 'Corpo-a-corpo'],
+        required: [true, 'Uma arma precisa de um tipo de disparo'],
+    },
+    dano: {
+        cabeca: {
+            type: Number,
         },
-        disparo: {
-            type: String,
-            enum: ['Automático', 'Semi-automático', 'Corpo-a-corpo'],
-            required: [true, 'Uma arma precisa de um tipo de disparo'],
+        corpo: {
+            type: Number,
         },
-        dano: {
-            cabeca: {
-                type: Number,
-            },
-            corpo: {
-                type: Number,
-            },
-            perna: {
-                type: Number,
-            },
+        perna: {
+            type: Number,
         },
     },
     imagem: {
