@@ -142,6 +142,12 @@ do PostMan. Então logo abaixo terá o template e após um exemplo com dados par
 
 ```
 
+---
+
+---
+
+---
+
 ### Rotas para o método POST - Armas:
 
 **localhost:3000/api/v1/armas** - Cadastrará os dados das armas no banco de dados da API. Para isso
@@ -189,6 +195,12 @@ do PostMan. Então logo abaixo terá o template e após um exemplo com dados par
 
 ```
 
+---
+
+---
+
+---
+
 ### Rotas para o método PATCH - Agentes:
 
 **localhost:3000/api/v1/agentes/:id** - Neste método de requisição será possível atualizar uma parte do documendo
@@ -235,6 +247,12 @@ nomes pré-definidos, ou seja, que são construidos com enums.
 
 ```
 
+---
+
+---
+
+---
+
 ### Rotas para o método PATCH - Armas:
 
 **localhost:3000/api/v1/armas/:id** -Neste método de requisição será possível atualizar uma parte do documendo
@@ -265,6 +283,12 @@ nomes pré-definidos, ou seja, que são construidas com enums.
 
 
 ```
+
+---
+
+---
+
+---
 
 ### Rotas para o método DELETE - Agentes:
 
