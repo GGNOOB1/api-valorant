@@ -6,7 +6,7 @@ Está API foi construída afim de colocar os conhecimentos de node js, javascrip
 
 ## Como funciona?
 
-Para aqueles que não conhecem o jogo Valorant, irei resumidamente contar um pouco de como ele funciona. O jogo funciona com duas equipes de cinco jogadores uma contra a outra, com cada equipe tendo que cumprir determinados objetivos para vencer as rodadas. Uma equipe assume o papel de atacantes, enquanto a outra equipe assume o papel de defensores. Cada equipe possui agentes, e esses agentes utilizam armas, sendo assim a API tem como objetivo obter dados de todos agentes, obter dados de um agente, atualizar um agente ou deletar um agente, assim como também fazer o mesmo com as armas.
+Para aqueles que não conhecem o jogo Valorant, irei resumidamente contar um pouco de como ele funciona. O jogo funciona com duas equipes de cinco jogadores uma contra a outra, com cada equipe tendo que cumprir determinados objetivos para vencer as rodadas. Uma equipe assume o papel de atacantes, enquanto a outra equipe assume o papel de defensores. Cada equipe possui agentes, e esses agentes utilizam armas. A partir dessas informações, a API tem como objetivo obter dados de todos agentes, obter dados de um agente, atualizar um agente ou deletar um agente, assim como também fazer o mesmo com as armas.
 
 ## Depêndencias utilizadas
 
@@ -25,23 +25,21 @@ Para aqueles que não conhecem o jogo Valorant, irei resumidamente contar um pou
 
 ## Instalando
 
-1° Baixar todos os arquivos presentes nesse repositório
+    1° Baixar todos os arquivos presentes nesse repositório
 
-2° Abrir os arquivos em um editor de texto com o terminal incluso, ou somente um terminal com acesso a pasta baixada e executar o comando **npm install**
+    2° Abrir os arquivos em um editor de texto com o terminal incluso, ou somente um terminal com acesso a pasta baixada e executar o   comando **npm install**
 
-3° Após isso executar o comando **npm run start** para iniciar o servidor e a API já estará em funcionamento
+    3° Após isso executar o comando **npm run start** para iniciar o servidor e a API já estará em funcionamento
 
 ## Como usar e exemplos de uso
 
-Para utilizar a API é necessário uma ferramenta que dê suporte à documentação das requisições feitas pela API e execução de testes de APIs, neste caso é recomendado o uso do Programa PostMan ou um semelhante.
+Para utilizar a API é necessário uma ferramenta que dê suporte à documentação das requisições feitas pela API e execução de testes de APIs, neste caso é recomendado o uso do Programa PostMan ou um semelhante. Bom, a API tem suporte a 4 métodos de requisição HTTP, GET, POST, PATCH e DELETE que deverão ser acessadas pelas seguintes rotas:
 
-Bom, a API tem suporte a 4 métodos de requisição HTTP, GET, POST, PATCH e DELETE que deverão ser acessadas pelas seguintes rotas:
-
-localhost:3000/api/v1/agentes
-localhost:3000/api/v1/agentes/:id
-localhost:3000/api/v1/armas
-localhost:3000/api/v1/armas/:id
-localhost:3000/api/v1/valorant
+    localhost:3000/api/v1/agentes
+    localhost:3000/api/v1/agentes/:id
+    localhost:3000/api/v1/armas
+    localhost:3000/api/v1/armas/:id
+    localhost:3000/api/v1/valorant
 
 Primeiro, temos as rotas para o método GET:
 
