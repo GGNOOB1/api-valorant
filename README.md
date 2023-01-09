@@ -27,13 +27,14 @@ Para aqueles que não conhecem o jogo Valorant, irei resumidamente contar um pou
 
     1° Baixar todos os arquivos presentes nesse repositório
 
-    2° Abrir os arquivos em um editor de texto com o terminal incluso, ou somente um terminal com acesso a pasta baixada e executar o   comando **npm install**
+    2° Abrir os arquivos em um editor de texto com o terminal incluso, ou somente um terminal com acesso a pasta
+    baixada e executar o comando **npm install**
 
     3° Após isso executar o comando **npm run start** para iniciar o servidor e a API já estará em funcionamento
 
 ## Como usar e exemplos de uso
 
-Para utilizar a API é necessário uma ferramenta que dê suporte à documentação das requisições feitas pela API e execução de testes de APIs, neste caso é recomendado o uso do Programa PostMan ou um semelhante. Bom, a API tem suporte a 4 métodos de requisição HTTP, GET, POST, PATCH e DELETE que deverão ser acessadas pelas seguintes rotas:
+Para utilizar a API é necessário uma ferramenta que dê suporte à documentação das requisições feitas pela API e execução de testes de APIs, neste caso é recomendado o uso do Programa PostMan ou um semelhante. Bom, a API tem suporte a 4 métodos de requisição http, GET, POST, PATCH e DELETE que deverão ser acessadas pelas seguintes rotas:
 
     localhost:3000/api/v1/agentes
     localhost:3000/api/v1/agentes/:id
@@ -43,17 +44,19 @@ Para utilizar a API é necessário uma ferramenta que dê suporte à documentaç
 
 ### Primeiro, temos as rotas para o método GET:
 
-    **localhost:3000/api/v1/agentes** - Listará todos os agentes disponíveis no banco de dados
-    **localhost:3000/api/v1/armas** - Listará todas as armas disponíveis no banco de dados
-    **localhost:3000/api/v1/valorant** - Listará todos os agentes e armas disponíveis no banco de dados
+**localhost:3000/api/v1/agentes** - Listará todos os agentes disponíveis no banco de dados
+**localhost:3000/api/v1/armas** - Listará todas as armas disponíveis no banco de dados
+**localhost:3000/api/v1/valorant** - Listará todos os agentes e armas disponíveis no banco de dados
 
 ### Segundo, temos as rotas para o método POST:
 
-    **localhost:3000/api/v1/agentes** - Cadastrará os dados dos agentes no banco de dados da API. Para isso será necessário preencher corretamente os campos de dados de um agente. Para isso logo abaixo terá o template e após um exemplo com dados.
+**localhost:3000/api/v1/agentes** - Cadastrará os dados dos agentes no banco de dados da API. Para isso
+será necessário preencher corretamente os campos de dados de um agente. Para isso logo abaixo terá o template
+e após um exemplo com dados.
 
 #### Template
 
-    ```JSON
+    ```json
 
     {
     "nome": "Colocar aqui um nome de agente com no minimo 3 letras e no máximo 1 nome composto, este campo será único, então terá uma validação mais forte",
