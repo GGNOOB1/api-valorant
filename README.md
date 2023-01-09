@@ -62,6 +62,12 @@ Para utilizar a API é necessário uma ferramenta que dê suporte à documentaç
 
 > É esperado o status code 200(ok) para requisições com sucesso e o status code 404(Not Found) para dados não encontrados
 
+---
+
+---
+
+---
+
 ### Rotas para o método POST - Agentes:
 
 **localhost:3000/api/v1/agentes** - Cadastrará os dados dos agentes no banco de dados da API. Para isso
