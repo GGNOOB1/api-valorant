@@ -1,12 +1,19 @@
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
-
+const cors = require('cors');
 // Configurando as variáveis de ambiente
 dotenv.config({ path: './config.env' });
 
+const corsOptions = {
+    origin: '*',
+    methods: 'GET,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+};
+
 // Importando app
 const app = require('./app');
-
+app.use(cors(corsOptions));
 // Substituindo a string <password> para a real senha do bd
 const bdInfo = process.env.DATABASE.replace(
     '<password>',
